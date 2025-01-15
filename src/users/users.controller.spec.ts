@@ -35,13 +35,20 @@ describe('UsersController', () => {
   });
 
   it('should create a user', () => {
-    expect(controller.createUser('Jane Doe', 'john@gmail.com')).toEqual({
+    expect(
+      controller.createUser({ name: 'Jane Doe', email: 'john@gmail.com' }),
+    ).toEqual({
       data: { id: 2, name: 'Jane Doe', email: 'john@gmail.com' },
     });
   });
 
   it('should update a user', () => {
-    expect(controller.updateUser(1, 'Jane Doe', 'john1@gmail.com')).toEqual({
+    expect(
+      controller.updateUser(1, {
+        name: 'Jane Doe',
+        email: 'john1@gmail.com',
+      }),
+    ).toEqual({
       data: { id: 1, name: 'Jane Doe', email: 'john1@gmail.com' },
     });
   });

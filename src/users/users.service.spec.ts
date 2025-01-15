@@ -33,13 +33,20 @@ describe('UsersService', () => {
   });
 
   it('should create a user', () => {
-    expect(service.createUser('Jane Doe', 'john@gmail.com')).toEqual({
+    expect(
+      service.createUser({ name: 'Jane Doe', email: 'john@gmail.com' }),
+    ).toEqual({
       data: { id: 2, name: 'Jane Doe', email: 'john@gmail.com' },
     });
   });
 
   it('should update a user', () => {
-    expect(service.updateUser(1, 'Jane Doe', 'john1@gmail.com')).toEqual({
+    expect(
+      service.updateUser(1, {
+        name: 'Jane Doe',
+        email: 'john1@gmail.com',
+      }),
+    ).toEqual({
       data: { id: 1, name: 'Jane Doe', email: 'john1@gmail.com' },
     });
   });
