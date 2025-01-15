@@ -10,15 +10,18 @@ import {
   ValidationPipe,
   ParseIntPipe,
   ParseEnumPipe,
+  Ip,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Prisma, Role } from '@prisma/client';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
+import { MyLoggerService } from '../my-logger/my-logger.service';
 
 @SkipThrottle()
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
+  private readonly logger = new MyLoggerService(EmployeesController.name);
 
   @Post()
   create(@Body(ValidationPipe) createEmployeeDto: Prisma.EmployeeCreateInput) {
@@ -28,8 +31,10 @@ export class EmployeesController {
   @SkipThrottle({ default: false })
   @Get()
   findAll(
+    @Ip() ip: string,
     @Query('role', new ParseEnumPipe(Role, { optional: true })) role?: Role,
   ) {
+    this.logger.log(`Request for ALL employees\tIP: ${ip}`);
     return this.employeesService.findAll(role);
   }
 
